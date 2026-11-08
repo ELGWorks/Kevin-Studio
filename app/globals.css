@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-paper: #edf1f7;
+  --color-mist: #dbe2ee;
+  --color-ink: #101426;
+  --color-cobalt: #3047ff;
+  --color-sun: #ffc83d;
+  --color-coral: #ff5c4d;
+  --color-mint: #2fbf9b;
+
+  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* "clip" (not "hidden") stops sideways scrolling without breaking position: sticky */
+html,
+body {
+  overflow-x: clip;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  scroll-behavior: auto; /* Lenis handles smoothing */
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-sun);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-cobalt);
+  outline-offset: 3px;
+}
+
+/* Big outlined type. Set --sc (stroke color) and optionally --sw (stroke width). */
+.outline-text {
+  color: var(--fill, #edf1f7);
+  -webkit-text-stroke: var(--sw, 4px) var(--sc, #101426);
+  paint-order: stroke fill;
+}
+/* Room for descenders so the lens mask never clips them */
+.name-pad {
+  padding-top: 0.04em;
+  padding-bottom: 0.12em;
+}
+
+/* ---------- Hero lens: a circle that reveals the colored name ---------- */
+
+.lens {
+  -webkit-mask-image: radial-gradient(
+    circle var(--r, 0px) at var(--x, 50%) var(--y, 50%),
+    #000 calc(100% - 1px),
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--r, 0px) at var(--x, 50%) var(--y, 50%),
+    #000 calc(100% - 1px),
+    transparent 100%
+  );
+}
+
+.ring {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: calc(var(--r, 0px) * 2);
+  height: calc(var(--r, 0px) * 2);
+  transform: translate(-50%, -50%);
+  border: 3px solid var(--color-ink);
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+/* ---------- Hero: logo construction ---------- */
+
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+  animation-delay: var(--d, 0s);
+}
+
+.pop {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) forwards;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .pop {
+    animation: none;
+    opacity: 1;
+  }
+  .ring {
+    display: none;
+  }
+}
