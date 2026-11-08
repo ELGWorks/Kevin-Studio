@@ -30,6 +30,19 @@ export const site = {
   ],
 };
 
+export const tools = [
+  "Photoshop",
+  "Illustrator",
+  "Canva"
+];
+
+export const services = [
+  {
+    name: "Graphic Design",
+    detail: "Visual identities and digital graphics.",
+  }
+];
+
 export type LogoKind = "orbit" | "leaf" | "mono" | "hex" | "wave" | "pin";
 
 export const logos: {
