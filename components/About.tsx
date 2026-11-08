@@ -1,4 +1,4 @@
-import { services, site, tools } from "@/data/portfolio";
+import { site } from "@/data/portfolio";
 
 export default function About() {
   return (
