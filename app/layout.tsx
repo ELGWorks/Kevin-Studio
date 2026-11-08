@@ -16,7 +16,7 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: `${site.name} | Logo designer and sketch artist`,
+  title: `${site.name} | Graphic Designer`,
   description: site.intro,
 };
 
